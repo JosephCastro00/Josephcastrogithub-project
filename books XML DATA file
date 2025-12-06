@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+  <book id="1">
+    <title>1984</title>
+    <author>George Orwell</author>
+    <year>1949</year>
+    <genre>Dystopian</genre>
+    <description>A dystopian social science fiction novel and cautionary tale about the dangers of totalitarianism.</description>
+    <cover>https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400</cover>
+  </book>
+  
+  <book id="2">
+    <title>Brave New World</title>
+    <author>Aldous Huxley</author>
+    <year>1932</year>
+    <genre>Science Fiction</genre>
+    <description>A dystopian novel set in a futuristic World State, whose citizens are environmentally engineered into an intelligence-based social hierarchy.</description>
+    <cover>https://images.unsplash.com/photo-1541963463532-d68292c34b19?w-400</cover>
+  </book>
+  
+  <book id="3">
+    <title>To Kill a Mockingbird</title>
+    <author>Harper Lee</author>
+    <year>1960</year>
+    <genre>Southern Gothic</genre>
+    <description>A novel about the serious issues of rape and racial inequality, told through the eyes of a young girl.</description>
+    <cover>https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400</cover>
+  </book>
+  
+  <book id="4">
+    <title>The Great Gatsby</title>
+    <author>F. Scott Fitzgerald</author>
+    <year>1925</year>
+    <genre>Tragedy</genre>
+    <description>A story about the mysteriously wealthy Jay Gatsby and his quixotic passion for the beautiful Daisy Buchanan.</description>
+    <cover>https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400</cover>
+  </book>
+  
+  <book id="5">
+    <title>Pride and Prejudice</title>
+    <author>Jane Austen</author>
+    <year>1813</year>
+    <genre>Romance</genre>
+    <description>A romantic novel of manners that depicts the emotional development of protagonist Elizabeth Bennet.</description>
+    <cover>https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400</cover>
+  </book>
+  
+  <book id="6">
+    <title>The Hobbit</title>
+    <author>J.R.R. Tolkien</author>
+    <year>1937</year>
+    <genre>Fantasy</genre>
+    <description>A fantasy novel about the adventures of hobbit Bilbo Baggins in Middle-earth.</description>
+    <cover>https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?w=400</cover>
+  </book>
+  
+  <book id="7">
+    <title>Frankenstein</title>
+    <author>Mary Shelley</author>
+    <year>1818</year>
+    <genre>Gothic Horror</genre>
+    <description>A story about Victor Frankenstein, a young scientist who creates a sapient creature in an unorthodox scientific experiment.</description>
+    <cover>https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400</cover>
+  </book>
+  
+  <book id="8">
+    <title>Moby-Dick</title>
+    <author>Herman Melville</author>
+    <year>1851</year>
+    <genre>Adventure</genre>
+    <description>The voyage of the whaling ship Pequod, commanded by Captain Ahab, who is seeking revenge on Moby Dick, the whale that destroyed his previous ship.</description>
+    <cover>https://images.unsplash.com/photo-1531901599638-a88c5bc9f03b?w=400</cover>
+  </book>
+</catalog>
