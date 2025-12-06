@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-book-open"></i> Book Finder</h1>
+            <p class="subtitle">Discover your next favorite book from our collection</p>
+        </header>
+
+        <!-- Navigation and Filters -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search by title, author, or genre...">
+                    <button id="searchBtn"><i class="fas fa-search"></i> Search</button>
+                    <button id="clearSearchBtn"><i class="fas fa-times"></i> Clear</button>
+                </div>
+                
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <label for="genreFilter"><i class="fas fa-tag"></i> Filter by Genre:</label>
+                        <select id="genreFilter">
+                            <option value="">All Genres</option>
+                            <option value="Dystopian">Dystopian</option>
+                            <option value="Science Fiction">Science Fiction</option>
+                            <option value="Southern Gothic">Southern Gothic</option>
+                            <option value="Tragedy">Tragedy</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Gothic Horror">Gothic Horror</option>
+                            <option value="Adventure">Adventure</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="yearFilter"><i class="fas fa-calendar-alt"></i> Filter by Year:</label>
+                        <select id="yearFilter">
+                            <option value="">All Years</option>
+                            <option value="1813">1813</option>
+                            <option value="1818">1818</option>
+                            <option value="1851">1851</option>
+                            <option value="1925">1925</option>
+                            <option value="1932">1932</option>
+                            <option value="1937">1937</option>
+                            <option value="1949">1949</option>
+                            <option value="1960">1960</option>
+                        </select>
+                    </div>
+                    
+                    <button id="showAllBtn"><i class="fas fa-list"></i> Show All Books</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="loading">
+            <div class="spinner"></div>
+            <p>Loading books...</p>
+        </div>
+
+        <!-- Book Display Area -->
+        <main>
+            <div id="bookCount" class="book-count">Books found: <span id="count">0</span></div>
+            
+            <div id="booksContainer" class="books-container">
+                <!-- Books will be dynamically inserted here by JavaScript -->
+            </div>
+            
+            <div id="noResults" class="no-results" style="display: none;">
+                <i class="fas fa-book"></i>
+                <h3>No books found</h3>
+                <p>Try adjusting your search or filters</p>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Book Finder Application &copy; 2023 | Built with PHP, XML, and AJAX</p>
+            <p class="footer-info">This application demonstrates dynamic XML parsing and AJAX functionality</p>
+        </footer>
+    </div>
+
+    <script>
+        // DOM Elements
+        const booksContainer = document.getElementById('booksContainer');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const noResults = document.getElementById('noResults');
+        const bookCount = document.getElementById('count');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+        const genreFilter = document.getElementById('genreFilter');
+        const yearFilter = document.getElementById('yearFilter');
+        const showAllBtn = document.getElementById('showAllBtn');
+
+        // Load books when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBooks();
+        });
+
+        // Event Listeners
+        searchBtn.addEventListener('click', performSearch);
+        clearSearchBtn.addEventListener('click', clearSearch);
+        showAllBtn.addEventListener('click', showAllBooks);
+        
+        // Press Enter in search input
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        // Filter change events
+        genreFilter.addEventListener('change', function() {
+            if (this.value) {
+                loadBooks('genre', this.value);
+            } else {
+                loadBooks();
+            }
+        });
+        
+        yearFilter.addEventListener('change', function() {
+            if (this.value) {
+                loadBooks('year', this.value);
+            } else {
+                loadBooks();
+            }
+        });
+
+        // Function to load books with optional filters
+        function loadBooks(filter = null, value = null) {
+            // Show loading indicator
+            loadingIndicator.style.display = 'flex';
+            booksContainer.innerHTML = '';
+            noResults.style.display = 'none';
+            
+            // Build URL with parameters
+            let url = 'books.php';
+            if (filter && value) {
+                url += `?filter=${filter}&value=${encodeURIComponent(value)}`;
+            }
+            
+            // Make AJAX request using fetch API
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(books => {
+                    // Hide loading indicator
+                    loadingIndicator.style.display = 'none';
+                    
+                    // Check if we got an error
+                    if (books.error) {
+                        displayError(books.error);
+                        return;
+                    }
+                    
+                    // Update book count
+                    bookCount.textContent = books.length;
+                    
+                    // Display books or show "no results" message
+                    if (books.length > 0) {
+                        displayBooks(books);
+                    } else {
+                        noResults.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    loadingIndicator.style.display = 'none';
+                    displayError('Failed to load books. Please try again.');
+                    console.error('Error:', error);
+                });
+        }
+
+        // Function to display books in the container
+        function displayBooks(books) {
+            booksContainer.innerHTML = '';
+            
+            books.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                
+                bookCard.innerHTML = `
+                    <div class="book-cover">
+                        <img src="${book.cover}" alt="${book.title}">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">${book.title}</h3>
+                        <p class="book-author"><i class="fas fa-user"></i> ${book.author}</p>
+                        <div class="book-meta">
+                            <span class="book-year"><i class="fas fa-calendar"></i> ${book.year}</span>
+                            <span class="book-genre"><i class="fas fa-tag"></i> ${book.genre}</span>
+                        </div>
+                        <p class="book-description">${book.description}</p>
+                        <div class="book-id">ID: ${book.id}</div>
+                    </div>
+                `;
+                
+                booksContainer.appendChild(bookCard);
+            });
+        }
+
+        // Function to display error message
+        function displayError(message) {
+            booksContainer.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Error</h3>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+        // Function to perform search
+        function performSearch() {
+            const searchTerm = searchInput.value.trim();
+            
+            if (searchTerm) {
+                // Reset other filters
+                genreFilter.value = '';
+                yearFilter.value = '';
+                
+                // Load books with search filter
+                loadBooks('search', searchTerm);
+            } else {
+                // If search is empty, load all books
+                loadBooks();
+            }
+        }
+
+        // Function to clear search
+        function clearSearch() {
+            searchInput.value = '';
+            genreFilter.value = '';
+            yearFilter.value = '';
+            loadBooks();
+        }
+
+        // Function to show all books
+        function showAllBooks() {
+            searchInput.value = '';
+            genreFilter.value = '';
+            yearFilter.value = '';
+            loadBooks();
+        }
+    </script>
+</body>
+</html>
