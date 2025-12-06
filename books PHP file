@@ -1,0 +1,63 @@
+<?php
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+
+// Function to load and parse XML file
+function parseBooksXML($filter = null, $value = null) {
+    $xmlFile = 'books.xml';
+    
+    if (!file_exists($xmlFile)) {
+        return ['error' => 'XML file not found'];
+    }
+    
+    // Load XML file
+    $xml = simplexml_load_file($xmlFile);
+    
+    $books = [];
+    
+    // Loop through each book in the XML
+    foreach ($xml->book as $book) {
+        $bookData = [
+            'id' => (string)$book['id'],
+            'title' => (string)$book->title,
+            'author' => (string)$book->author,
+            'year' => (int)$book->year,
+            'genre' => (string)$book->genre,
+            'description' => (string)$book->description,
+            'cover' => (string)$book->cover
+        ];
+        
+        // Apply filters if provided
+        if ($filter && $value) {
+            if ($filter === 'genre' && strtolower($bookData['genre']) === strtolower($value)) {
+                $books[] = $bookData;
+            } elseif ($filter === 'year' && $bookData['year'] == $value) {
+                $books[] = $bookData;
+            } elseif ($filter === 'search') {
+                // Search in title, author, or genre
+                $searchValue = strtolower($value);
+                if (strpos(strtolower($bookData['title']), $searchValue) !== false ||
+                    strpos(strtolower($bookData['author']), $searchValue) !== false ||
+                    strpos(strtolower($bookData['genre']), $searchValue) !== false) {
+                    $books[] = $bookData;
+                }
+            }
+        } else {
+            // No filter, return all books
+            $books[] = $bookData;
+        }
+    }
+    
+    return $books;
+}
+
+// Get filter parameters from request
+$filter = isset($_GET['filter']) ? $_GET['filter'] : null;
+$value = isset($_GET['value']) ? $_GET['value'] : null;
+
+// Parse XML with optional filters
+$books = parseBooksXML($filter, $value);
+
+// Return JSON response
+echo json_encode($books);
+?>
