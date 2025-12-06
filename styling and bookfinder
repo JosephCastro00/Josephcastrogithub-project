@@ -1,0 +1,464 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+/* Header Styles */
+.header {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    border-bottom: 5px solid #4a00e0;
+}
+
+.header h1 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.nav-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-container input {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.search-container input:focus {
+    border-color: #6a11cb;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+}
+
+.search-container button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#searchBtn {
+    background-color: #6a11cb;
+    color: white;
+}
+
+#searchBtn:hover {
+    background-color: #5a0db3;
+    transform: translateY(-2px);
+}
+
+#clearSearchBtn {
+    background-color: #6c757d;
+    color: white;
+}
+
+#clearSearchBtn:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+.filter-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-weight: 500;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.filter-group select {
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 1rem;
+    min-width: 180px;
+    cursor: pointer;
+}
+
+.filter-group select:focus {
+    border-color: #6a11cb;
+    outline: none;
+}
+
+#showAllBtn {
+    padding: 12px 20px;
+    background-color: #20c997;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#showAllBtn:hover {
+    background-color: #1ba87e;
+    transform: translateY(-2px);
+}
+
+/* Loading Indicator */
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.spinner {
+    border: 5px solid rgba(106, 17, 203, 0.2);
+    border-radius: 50%;
+    border-top: 5px solid #6a11cb;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Book Count */
+.book-count {
+    padding: 20px;
+    font-size: 1.2rem;
+    background-color: #f8f9fa;
+    margin: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    color: #495057;
+}
+
+.book-count span {
+    color: #6a11cb;
+    font-size: 1.4rem;
+}
+
+/* Books Container */
+.books-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+/* Book Card */
+.book-card {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #eaeaea;
+}
+
+.book-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.book-cover {
+    height: 220px;
+    overflow: hidden;
+}
+
+.book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.book-card:hover .book-cover img {
+    transform: scale(1.05);
+}
+
+.book-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-title {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #2d3436;
+    line-height: 1.3;
+}
+
+.book-author {
+    color: #6c757d;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.book-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.book-year, .book-genre {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    color: #6a11cb;
+    font-weight: 500;
+}
+
+.book-description {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+.book-id {
+    font-size: 0.8rem;
+    color: #999;
+    text-align: right;
+    font-style: italic;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+}
+
+.no-results i {
+    font-size: 4rem;
+    color: #dee2e6;
+    margin-bottom: 20px;
+}
+
+.no-results h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #495057;
+}
+
+/* Error Message */
+.error-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: #dc3545;
+    grid-column: 1 / -1;
+}
+
+.error-message i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.error-message h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+.footer {
+    background-color: #2d3436;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.footer p {
+    margin-bottom: 8px;
+}
+
+.footer-info {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        border-radius: 0;
+        box-shadow: none;
+    }
+    
+    body {
+        padding: 0;
+    }
+    
+    .header h1 {
+        font-size: 2.2rem;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .books-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        padding: 15px;
+    }
+    
+    .filter-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-group select {
+        min-width: 100%;
+    }
+    
+    .search-container {
+        flex-direction: column;
+    }
+    
+    .search-container input, 
+    .search-container button {
+        width: 100%;
+    }
+}
+
+
+
+
+
+BOOK FINDER WEB APPLICATION
+===========================
+
+Description:
+A dynamic web application that parses an XML file containing book data and displays it
+using AJAX for a smooth, dynamic user experience without page reloads.
+
+Features:
+- Parse XML book data using PHP
+- Search books by title, author, or genre
+- Filter books by genre or year
+- Display books in a responsive card layout
+- AJAX-based interaction (no page reloads)
+- Fully responsive design
+
+Project Structure:
+1. index.php - Main frontend with AJAX functionality
+2. books.php - Backend API that parses XML and returns JSON
+3. books.xml - XML data file with book information
+4. style.css - Styles for the application
+
+How to Use:
+1. Upload all files to a PHP-enabled web server
+2. Access index.php in your web browser
+3. Use the search box to find books by title, author, or genre
+4. Use the dropdown filters to filter by genre or year
+5. Click "Show All Books" to reset all filters
+
+Technical Implementation:
+- Uses PHP's simplexml_load_file() to parse XML
+- Uses JavaScript fetch API for AJAX requests
+- Returns data in JSON format for easy processing
+- Responsive design with CSS Grid and Flexbox
+
+Hosting Instructions:
+1. Upload all files to a free PHP hosting service like:
+   - InfinityFree
+   - 000WebHost
+   - Freehostia
+2. Ensure the server supports PHP (minimum PHP 5.6 recommended)
+3. Access your application via the provided URL
+
+Note: 
+The book cover images are loaded from Unsplash. In a production environment,
+you might want to host these images locally or use a more reliable source.
+
+Learning Outcomes:
+This project demonstrates:
+- PHP XML parsing with simplexml_load_file()
+- Creating a RESTful API with PHP
+- Making asynchronous requests with JavaScript fetch API
+- Dynamic DOM manipulation based on JSON data
+- Responsive web design principles
